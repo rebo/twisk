@@ -12,7 +12,7 @@ module.exports = {
      *
      * @returns Set of class names
      */
-    getUsedCssClasses: function() {
+    getUsedCssClasses: function () {
         return new Set([
             ...getUsedCssClassesInRust(),
             ...getUsedCssClassesInHandlebars()
@@ -21,7 +21,7 @@ module.exports = {
 }
 
 // https://doc.rust-lang.org/book/appendix-01-keywords.html
-function getKeywords () {
+function getKeywords() {
     return [
         'as',
         'break',
@@ -96,6 +96,7 @@ function getUsedCssClassesInRust() {
             // add class to set
             .forEach(class_ => usedCssClasses.add(class_))
     })
+
     return usedCssClasses
 }
 
@@ -119,11 +120,11 @@ function getUsedCssClassesInHandlebars() {
             .forEach(content => {
                 // split classes
                 const classes = content.match(/\S+/g) || []
-                    classes
-                        // transform classes to Rust form
-                        .map(escapeClassName)
-                        // add class to set
-                        .forEach(class_ => usedCssClasses.add(class_))
+                classes
+                    // transform classes to Rust form
+                    .map(escapeClassName)
+                    // add class to set
+                    .forEach(class_ => usedCssClasses.add(class_))
             })
     })
 

@@ -4,14 +4,12 @@ use seed::{prelude::*, *};
 use seed_comp_helpers::on_click;
 
 #[topo::nested]
-pub fn alert<T: Into<String>>(color: T, contents: T) -> Node<Msg> {
-    let bg_col = format!("bg-{}-500", color.into());
-
+pub fn pink_alert<T: Into<String>>(contents: T) -> Node<Msg> {
     let (show_alert, show_alert_access) = use_state(|| true);
 
     if show_alert {
         div![
-            class![C.text_white C.px_6 C.py_4 C.border_0 C.rounded C.relative C.mb_4 bg_col.as_ref() ],
+            class![C.bg_pink_500 C.text_white C.px_6 C.py_4 C.border_0 C.rounded C.relative C.mb_4],
             span![
                 class!(C.text_xl C.inline_block C.mr_5 C.align_middle),
                 i![class!("fas" "fa-bell")]

@@ -33,8 +33,6 @@ pub fn view() -> Node<Msg> {
             div![
                 class![C.w_5of6],
                 dropdowns::dropdown(
-                    "pink",
-                    "white",
                     "A dropdown",
                     &[("one", "#one"), ("two", "#two"), ("three", "#three")]
                 ),
@@ -45,7 +43,7 @@ pub fn view() -> Node<Msg> {
             div![class![C.w_1of6 C.text_right C.pr_1], "Alert:"],
             div![
                 class![C.w_5of6],
-                alerts::alert("pink", "This is an a alert - check it out!"),
+                alerts::pink_alert("This is an a alert - check it out!"),
             ]
         ],
         div![
@@ -76,7 +74,7 @@ fn tab_a() -> (String, Node<Msg>) {
     let (count, count_access) = use_state(|| 0);
     let content = div![
         button![
-            class![C.p_1, C.m_2 C.block C.rounded, C.bg_pink_600, C.text_white],
+            class![C.p_2, C.m_2 C.block C.rounded, C.bg_pink_600, C.text_white],
             format!("Clicked {} times", count),on_click(move |_| count_access.set(count+1))],
             "Tempor nulla duis non nisi tempor in cillum magna pariatur magna irure. Exercitation eu sit culpa exercitation cillum veniam proident nulla duis incididunt sit exercitation officia Lorem. Dolor irure deserunt anim mollit eu ipsum elit cillum sunt consequat ullamco labore occaecat. In ex sunt incididunt ullamco commodo. Reprehenderit qui aliquip ex anim in amet veniam reprehenderit occaecat veniam enim deserunt id labore.",
     ];
@@ -84,7 +82,15 @@ fn tab_a() -> (String, Node<Msg>) {
 }
 
 fn tab_b() -> (String, Node<Msg>) {
-    ("Title 2".to_string(), div!["Nulla cillume ex dolore est sunt fugiat. Proident magna mollit duis voluptate eu laboris ipsum adipisicing est pariatur sint officia. Ad do et incididunt aliquip est ut incididunt cillum incididunt ea reprehenderit reprehenderit. Officia sunt enim mollit nisi anim occaecat mollit."])
+    let (count, count_access) = use_state(|| 0);
+    let content = div![
+        button![
+            class![C.p_2, C.m_2 C.block C.rounded, C.bg_pink_600, C.text_white],
+            format!("Clicked {} times", count),on_click(move |_| count_access.set(count+1))],
+            "Nulla cillum ex dolore est sunt fugiat. Proident magna mollit duis voluptate eu laboris ipsum adipisicing est pariatur sint officia. Ad do et incididunt aliquip est ut incididunt cillum incididunt ea reprehenderit reprehenderit. Officia sunt enim mollit nisi anim occaecat mollit.",
+    ];
+
+    ("Title 3".to_string(), content)
 }
 
 #[topo::nested]
@@ -92,7 +98,7 @@ fn tab_c() -> (String, Node<Msg>) {
     let (count, count_access) = use_state(|| 0);
     let content = div![
         button![
-            class![C.p_1, C.m_2 C.block C.rounded, C.bg_pink_600, C.text_white],
+            class![C.p_2, C.m_2 C.block C.rounded, C.bg_pink_600, C.text_white],
             format!("Clicked {} times", count),on_click(move |_| count_access.set(count+1))],
         "Dolor ea dolor tempor laborum et do reprehenderit sit incididunt minim duis et ex Lorem. Consectetur irure dolor qui fugiat quis ex culpa officia sunt nulla velit id minim laboris. Anim sit ipsum culpa laboris veniam elit irure occaecat ea id ipsum.",
     ];

@@ -11,29 +11,13 @@ use seed_comp_helpers::on_click;
 
 #[topo::nested]
 pub fn dropdown<T: Into<String>>(
-    main_color: T,
-    dropdown_color: T,
     main_contents: T,
     dropdown_contents: &[(&str, &str)],
 ) -> Node<Msg> {
-    let main_color = main_color.into();
-    let dropdown_color = dropdown_color.into();
     let (dropdown_show, dropdown_show_access) = use_state(|| false);
 
     let btn_ref = use_ref();
     let popover_ref = use_ref();
-
-    let main_bg_color = if main_color == "white" {
-        "bg-gray-800".to_string()
-    } else {
-        format!("bg-{}-500", main_color)
-    };
-
-    let dropdown_bg_color = if dropdown_color == "white" {
-        "bg-gray-800".to_string()
-    } else {
-        format!("bg-{}-500", dropdown_color)
-    };
 
     let btn_classname = btn_ref.class_name();
     let popover_classname = popover_ref.class_name();
@@ -44,7 +28,7 @@ pub fn dropdown<T: Into<String>>(
             div![
                 class![C.relative C.inline_flex C.align_middle C.w_full],
                 button![
-                    class![C.text_white C.font_bold C.uppercase C.text_sm C.px_6 C.py_3 C.rounded C.shadow C.hover__shadow_lg C.outline_none C.focus__outline_none C.mr_1 C.mb_1 main_bg_color.as_ref() btn_classname.as_ref()],
+                    class![C.text_white C.font_bold C.uppercase C.text_sm C.px_6 C.py_3 C.rounded C.shadow C.hover__shadow_lg C.outline_none C.focus__outline_none C.mr_1 C.mb_1 C.bg_gray_800 btn_classname.as_ref()],
                     style![St::MinWidth => "12rem"],
                     style![St::Transition => "all .15s ease"],
                     attrs![At::Type => "button"],
@@ -73,7 +57,7 @@ pub fn dropdown<T: Into<String>>(
                     } else {
                         class![C.hidden]
                     },
-                    class![dropdown_bg_color.as_ref()]
+                    class![C.bg_gray_800]
                     ,
                     class![C.text_base C.z_50 C.float_left C.py_2 C.list_none C.text_left C.rounded C.shadow_lg C.mt_1],
                     class![popover_classname.as_ref()],

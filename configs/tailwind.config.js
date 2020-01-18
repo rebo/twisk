@@ -161,6 +161,8 @@ module.exports = {
       }
     }
   },
-  variants: {},
+  variants: {
+    margin: ['last'],
+  },
   plugins: []
 }

@@ -16,6 +16,9 @@ module.exports = (env, argv) => {
       // Bundle root with name `app.js`.
       app: path.resolve(__dirname, "../entries/index.ts")
     },
+    performance: {
+      hints: false
+    },
     output: {
       // You can deploy your site from this folder (after build with e.g. `yarn build:release`)
       path: dist,
