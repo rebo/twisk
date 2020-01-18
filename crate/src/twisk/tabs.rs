@@ -30,7 +30,6 @@ pub fn tabs_3<T: Into<String>>(
               class![C.text_pink_600 C.bg_white]
             },
             on_click(e!((open_tab_access) move |_| open_tab_access.set(1))),
-            attrs![At::Href=>"#link1"],
             first_tab_title.into(),
           ]
         ],
@@ -44,7 +43,6 @@ pub fn tabs_3<T: Into<String>>(
               class![C.text_pink_600 C.bg_white]
             },
             on_click(e!((open_tab_access) move |_| open_tab_access.set(2))),
-            attrs![At::Href=>"#link1"],
             second_tab_title.into(),
           ]
         ],
@@ -58,7 +56,6 @@ pub fn tabs_3<T: Into<String>>(
               class![C.text_pink_600 C.bg_white]
             },
             on_click(e!((open_tab_access) move |_| open_tab_access.set(3))),
-            attrs![At::Href=>"#link1"],
             third_tab_title.into(),
           ]
         ]
