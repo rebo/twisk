@@ -1,10 +1,13 @@
-use crate::{generated::css_classes::C, Msg};
+use crate::{
+    generated::css_classes::C,
+    popper,
+    popper::Popper,
+    use_ref::{use_ref, LazyHtmlElementStateAccessTrait},
+    Msg,
+};
+use comp_state::{topo, use_state};
 use seed::{prelude::*, *};
-use comp_state::{use_state,topo};
 use seed_comp_helpers::on_click;
-use crate::use_ref::{use_ref, LazyHtmlElementStateAccessTrait};
-use crate::popper::Popper;
-use crate::popper;
 
 #[topo::nested]
 pub fn dropdown<T: Into<String>>(
@@ -60,7 +63,6 @@ pub fn dropdown<T: Into<String>>(
                                     JsValue::from_serde(&example).unwrap();
                                 Popper::new(btn, popover, value);
                                 dropdown_show_access.set(true);
-                    
                             }
                         }),
                         main_contents.into()
@@ -89,7 +91,3 @@ pub fn dropdown<T: Into<String>>(
         ]
     ]
 }
-
-
-
-

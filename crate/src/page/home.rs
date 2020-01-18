@@ -1,7 +1,7 @@
 use crate::{generated::css_classes::C, twisk::*, Msg};
-use comp_state::{topo,use_state};
-use seed_comp_helpers::on_click;
+use comp_state::{topo, use_state};
 use seed::{prelude::*, *};
+use seed_comp_helpers::on_click;
 
 #[topo::nested]
 pub fn view() -> Node<Msg> {
@@ -73,19 +73,14 @@ pub fn view() -> Node<Msg> {
 
 #[topo::nested]
 fn tab_a() -> (String, Node<Msg>) {
-    let (count, count_access) = use_state(||0);
+    let (count, count_access) = use_state(|| 0);
     let content = div![
         button![
             class![C.p_1, C.m_2 C.block C.rounded, C.bg_pink_600, C.text_white],
             format!("Clicked {} times", count),on_click(move |_| count_access.set(count+1))],
-
             "Tempor nulla duis non nisi tempor in cillum magna pariatur magna irure. Exercitation eu sit culpa exercitation cillum veniam proident nulla duis incididunt sit exercitation officia Lorem. Dolor irure deserunt anim mollit eu ipsum elit cillum sunt consequat ullamco labore occaecat. In ex sunt incididunt ullamco commodo. Reprehenderit qui aliquip ex anim in amet veniam reprehenderit occaecat veniam enim deserunt id labore.",
-    
     ];
-
     ("Title 1".to_string(), content)
-
-
 }
 
 fn tab_b() -> (String, Node<Msg>) {
@@ -94,16 +89,13 @@ fn tab_b() -> (String, Node<Msg>) {
 
 #[topo::nested]
 fn tab_c() -> (String, Node<Msg>) {
-    let (count, count_access) = use_state(||0);
+    let (count, count_access) = use_state(|| 0);
     let content = div![
         button![
             class![C.p_1, C.m_2 C.block C.rounded, C.bg_pink_600, C.text_white],
             format!("Clicked {} times", count),on_click(move |_| count_access.set(count+1))],
-
         "Dolor ea dolor tempor laborum et do reprehenderit sit incididunt minim duis et ex Lorem. Consectetur irure dolor qui fugiat quis ex culpa officia sunt nulla velit id minim laboris. Anim sit ipsum culpa laboris veniam elit irure occaecat ea id ipsum.",
-    
     ];
-
 
     ("Title 3".to_string(), content)
 }

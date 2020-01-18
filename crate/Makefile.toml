@@ -69,6 +69,6 @@ description = "Lint with Clippy"
 clear = true
 install_crate = { rustup_component_name = "clippy", binary = "cargo-clippy", test_arg = "--help" }
 command = "cargo"
-args = ["clippy", "--all-features", "--", "--deny", "warnings", "--deny", "clippy::pedantic", "--deny", "clippy::nursery"]
+args = ["clippy", "--all-features", "--", "--deny", "warnings","--deny", "clippy::nursery"]
 
 

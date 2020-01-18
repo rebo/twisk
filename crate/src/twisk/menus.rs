@@ -1,14 +1,13 @@
 use crate::{generated::css_classes::C, Msg};
+use comp_state::{topo, use_state};
 use seed::{prelude::*, *};
-use comp_state::{use_state,topo};
 use seed_comp_helpers::on_click;
 #[topo::nested]
 pub fn pink_menu<T: Into<String>>(
     header: T,
     menu_items: &[(&str, &str)],
 ) -> Node<Msg> {
-
-    let (menu_open, menu_open_access) = use_state(||false);
+    let (menu_open, menu_open_access) = use_state(|| false);
 
     div![
         class![C.flex, C.flex_wrap C.py_2],
@@ -52,7 +51,6 @@ pub fn pink_menu<T: Into<String>>(
                                 ]
                             }
                             ).collect::<Vec<Node<Msg>>>()
-                            
                         ]
                     ]
             ]
