@@ -3,7 +3,10 @@ use comp_state::{topo, use_state};
 use seed::{prelude::*, *};
 use seed_comp_helpers::on_click;
 #[topo::nested]
-pub fn pink_menu<T: Into<String>>(header: T, menu_items: &[(&str, &str)]) -> Node<Msg> {
+pub fn pink_menu<T: Into<String>>(
+    header: T,
+    menu_items: &[(&str, &str)],
+) -> Node<Msg> {
     let (menu_open, menu_open_access) = use_state(|| false);
 
     div![
