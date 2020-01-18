@@ -1,3 +1,4 @@
+var webpack = require('webpack');
 const path = require("path");
 const dist = path.resolve(__dirname, "../dist");
 
@@ -18,7 +19,7 @@ module.exports = (env, argv) => {
     output: {
       // You can deploy your site from this folder (after build with e.g. `yarn build:release`)
       path: dist,
-      filename:'[name].[contenthash].js'
+      filename: '[name].[contenthash].js'
     },
     devServer: {
       contentBase: dist,
@@ -34,13 +35,17 @@ module.exports = (env, argv) => {
       historyApiFallback: true,
     },
     plugins: [
+      new webpack.ProvidePlugin({
+        Popper: ['popper.js', 'default'],
+        Popper2: ['popper.js'],
+      }),
       // Show compilation progress bar in console.
       new WebpackBar(),
       // Clean `dist` folder before compilation.
       new CleanWebpackPlugin(),
       // Extract CSS styles into a file.
       new MiniCssExtractPlugin({
-        filename:'[name].[contenthash].css'
+        filename: '[name].[contenthash].css'
       }),
       // Add scripts, css, ... to html template.
       new HtmlWebpackPlugin({
@@ -65,17 +70,14 @@ module.exports = (env, argv) => {
           from: "static",
           to: "static"
         },
-        {
-          from: "favicons",
-          to: ""
-        }
       ]),
     ],
     // Webpack try to guess how to resolve imports in this order:
     resolve: {
       extensions: [".ts", ".js", ".wasm"],
+      modules: ['node_modules'],
       alias: {
-        crate: path.resolve(__dirname, "../crate")
+        crate: path.resolve(__dirname, "../crate"),
       }
     },
     module: {

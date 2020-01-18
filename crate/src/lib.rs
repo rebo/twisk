@@ -1,31 +1,30 @@
 // @TODO: uncomment once https://github.com/rust-lang/rust/issues/54726 stable
 //#![rustfmt::skip::macros(class)]
-
+#![feature(track_caller)]
 #![allow(clippy::used_underscore_binding)]
 #![allow(clippy::non_ascii_literal)]
 #![allow(clippy::enum_glob_use)]
 
 mod generated;
 mod page;
+mod popper;
+mod twisk;
+mod use_ref;
 
 use fixed_vec_deque::FixedVecDeque;
 use generated::css_classes::C;
-use seed::{events::Listener, prelude::*, *};
+use seed::{prelude::*, Listener, *};
 use Visibility::*;
 
-const TITLE_SUFFIX: &str = "Kavik.cz";
-// https://mailtolink.me/
-const MAIL_TO_KAVIK: &str = "mailto:martin@kavik.cz?subject=Something%20for%20Martin&body=Hi!%0A%0AI%20am%20Groot.%20I%20like%20trains.";
-const MAIL_TO_HELLWEB: &str =
-    "mailto:martin@hellweb.app?subject=Hellweb%20-%20pain&body=Hi!%0A%0AI%20hate";
-const USER_AGENT_FOR_PRERENDERING: &str = "ReactSnap";
+use comp_state::topo;
+
+const TITLE_SUFFIX: &str = "Blank Example";
 const STATIC_PATH: &str = "static";
 const IMAGES_PATH: &str = "static/images";
 
 // ------ ------
 // Before Mount
 // ------ ------
-
 fn before_mount(_: Url) -> BeforeMount {
     BeforeMount::new().mount_type(MountType::Takeover)
 }
@@ -33,7 +32,6 @@ fn before_mount(_: Url) -> BeforeMount {
 // ------ ------
 //     Model
 // ------ ------
-
 #[derive(Clone, Copy, Eq, PartialEq)]
 pub enum Visibility {
     Visible,
@@ -57,7 +55,6 @@ pub struct Model {
     pub page: Page,
     pub scroll_history: ScrollHistory,
     pub menu_visibility: Visibility,
-    pub in_prerendering: bool,
 }
 
 // ------ Page ------
@@ -94,23 +91,16 @@ impl From<Url> for Page {
 // ------ ------
 
 fn after_mount(url: Url, orders: &mut impl Orders<Msg>) -> AfterMount<Model> {
+    seed_comp_helpers::init::<Msg, Model, _>(orders);
     orders.send_msg(Msg::UpdatePageTitle);
 
     let model = Model {
         page: url.into(),
         scroll_history: ScrollHistory::new(),
         menu_visibility: Hidden,
-        in_prerendering: is_in_prerendering(),
     };
 
     AfterMount::new(model).url_handling(UrlHandling::None)
-}
-
-fn is_in_prerendering() -> bool {
-    let user_agent =
-        window().navigator().user_agent().expect("cannot get user agent");
-
-    user_agent == USER_AGENT_FOR_PRERENDERING
 }
 
 // ------ ------
@@ -156,6 +146,13 @@ pub enum Msg {
     Scrolled(i32),
     ToggleMenu,
     HideMenu,
+    DoNothing,
+}
+
+impl std::default::Default for Msg {
+    fn default() -> Self {
+        Self::DoNothing
+    }
 }
 
 pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
@@ -182,6 +179,7 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::HideMenu => {
             model.menu_visibility = Hidden;
         },
+        Msg::DoNothing => {},
     }
 }
 
@@ -197,25 +195,26 @@ pub fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
 //   - https://codepoints.net/U+FE0E
 
 pub fn view(model: &Model) -> impl View<Msg> {
-    // @TODO: Setup `prerendered` properly once https://github.com/David-OConnor/seed/issues/223 is resolved
-    let prerendered = true;
+    view_component_root(model)
+}
+
+#[topo::nested]
+pub fn view_component_root(model: &Model) -> Node<Msg> {
     div![
         class![
-            C.fade_in => !prerendered,
+            C.fade_in => false,
             C.min_h_screen,
             C.flex,
             C.flex_col,
         ],
         match model.page {
-            Page::Home => page::home::view().els(),
-            Page::About => page::about::view().els(),
-            Page::NotFound => page::not_found::view().els(),
+            Page::Home => page::home::view(),
+            _ => page::home::view(),
+            /* Page::About => page::about::view().els(),
+             * Page::NotFound => page::not_found::view().els(), */
         },
-        page::partial::header::view(model).els(),
-        page::partial::footer::view().els(),
     ]
 }
-
 pub fn image_src(image: &str) -> String {
     format!("{}/{}", IMAGES_PATH, image)
 }

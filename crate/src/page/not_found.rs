@@ -17,12 +17,9 @@ pub fn view() -> impl View<Msg> {
             class![
                 C.font_display,
                 C.font_thin,
-                C.text_29,
-                C.text_gray_10,
-                // sm__
-                C.sm__text_45,
-                // lg__
-                C.lg__text_55,
+                /* sm__ */
+
+                /* lg__ */
             ],
             "PAGE NOT FOUND!"
         ],
