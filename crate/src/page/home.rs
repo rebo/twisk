@@ -84,7 +84,7 @@ fn tab_a() -> (String, Node<Msg>) {
 }
 
 fn tab_b() -> (String, Node<Msg>) {
-    ("Title 2".to_string(), div!["Nulla cillum ex dolore est sunt fugiat. Proident magna mollit duis voluptate eu laboris ipsum adipisicing est pariatur sint officia. Ad do et incididunt aliquip est ut incididunt cillum incididunt ea reprehenderit reprehenderit. Officia sunt enim mollit nisi anim occaecat mollit."])
+    ("Title 2".to_string(), div!["Nulla cillume ex dolore est sunt fugiat. Proident magna mollit duis voluptate eu laboris ipsum adipisicing est pariatur sint officia. Ad do et incididunt aliquip est ut incididunt cillum incididunt ea reprehenderit reprehenderit. Officia sunt enim mollit nisi anim occaecat mollit."])
 }
 
 #[topo::nested]
